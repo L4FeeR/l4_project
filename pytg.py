@@ -1,4 +1,4 @@
-#!/ust/bin/python3
+#!/usr/bin/python3
 from colors import *
 import os, sys, time, requests
 os.system("clear")
