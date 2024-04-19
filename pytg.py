@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from colors import *
-import os, sys, time, requests
+import os, sys, time, requests, subprocess
 os.system("clear")
 
 
@@ -30,21 +30,44 @@ NOTES=yellow+"""	To send a multiple line program,
 """+reset
 
 
-
-
-
+def sendoutput():
+	print("""
+		1. Send Message to L4 Telegram Group
+		2.Send Command Output To L4 Telegram Group
+		""")
+	opt=int(input("[+]Enter Your Choice : "))
+	if opt==1:
+		msg_send()
+	elif opt==2:
+		cmd_send()
 #Message Logic
-try:
-	print(NOTES)
-	while True:
-		m=input(f"\n\t{t}Enter message to send [CTRL^D,C to end] : ")
-		msg.append(m)
-		print(msg)
-except KeyboardInterrupt:
-	print(yellow+"\n\n\t["+green+"CTRL^C"+yellow+"]"+reset+"Message gathering done.")
+def msg_send():
+	try:
+		print(NOTES)
+		while True:
 
-except EOFError:
-	print(yellow+"\n\n\t["+green+"CTRL^D"+yellow+"]"+reset+"Message gathering done.")
+
+
+			m=input(f"\n\t{t}Enter message to send [CTRL^D,C to end] : ")
+			msg.append("message : %0A %0A"+m)
+			print(msg)
+	except KeyboardInterrupt:
+		print(yellow+"\n\n\t["+green+"CTRL^C"+yellow+"]"+reset+"Message gathering done.")
+
+	except EOFError:
+		print(yellow+"\n\n\t["+green+"CTRL^D"+yellow+"]"+reset+"Message gathering done.")
+
+def cmd_send():
+	try:
+	        print(NOTES)
+        	while True:
+                	m=input(f"\n\t{t}Enter Your Shell command to send the output[CTRL^D,C to end] : ")
+                	msg.append("command : "+m+"%0A %0A"+subprocess.getoutput(m))
+                	print(m,msg)
+	except KeyboardInterrupt:
+        	print(yellow+"\n\n\t["+green+"CTRL^C"+yellow+"]"+reset+"Message gathering done.")
+	except EOFError:
+        	print(yellow+"\n\n\t["+green+"CTRL^D"+yellow+"]"+reset+"Message gathering done.")
 
 
 
@@ -57,6 +80,7 @@ os.system("clear")
 print("\n\n\t======================")
 print("\t    Sending Messages")
 print("\t======================")
+sendoutput()
 try:
 	for i in msg:
 		if msg[num]=="":
